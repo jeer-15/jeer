@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git ''  // Replace with your actual repo URL
+                git 'https://github.com/jeer-15/jeer'  // Replace with your actual repo URL
             }
         }
 
@@ -32,7 +32,7 @@ pipeline {
         stage('Deploy to Cloud') {
             steps {
                 script {
-                    sh 'gcloud run deploy your-service --image=gcr.io/your-project-id/$DOCKER_IMAGE:$DOCKER_TAG --platform managed --region us-central1 --allow-unauthenticated'
+                    sh 'gcloud run deploy jeer-backend --image=gcr.io/my-gcp-project-459116/$DOCKER_IMAGE:$DOCKER_TAG --platform managed --region us-central1 --allow-unauthenticated'
                 }
             }
         }
