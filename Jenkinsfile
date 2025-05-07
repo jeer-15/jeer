@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/jeer-15/jeer'  // Replace with your actual repo URL
+                git branch:'main', url:'https://github.com/jeer-15/jeer'  // Replace with your actual repo URL
             }
         }
 
