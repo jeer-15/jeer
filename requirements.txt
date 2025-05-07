@@ -1,0 +1,7 @@
+beautifulsoup4
+sentence-transformers
+faiss-cpu
+pdfplumber
+python-dotenv
+requests
+numpy
