@@ -9,14 +9,14 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch:'main', url:'https://github.com/jeer-15/jeer'  // Replace with your actual repo URL
+                git branch: 'main', url: 'https://github.com/jeer-15/jeer'  // Replace with your actual repo URL
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
+                    bat 'docker build -t %DOCKER_IMAGE%:%DOCKER_TAG% .'
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
+                    bat 'docker push %DOCKER_IMAGE%:%DOCKER_TAG%'
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
         stage('Deploy to Cloud') {
             steps {
                 script {
-                    sh 'gcloud run deploy jeer-backend --image=gcr.io/my-gcp-project-459116/$DOCKER_IMAGE:$DOCKER_TAG --platform managed --region us-central1 --allow-unauthenticated'
+                    bat 'gcloud run deploy jeer-backend --image=gcr.io/my-gcp-project-459116/%DOCKER_IMAGE%:%DOCKER_TAG% --platform managed --region us-central1 --allow-unauthenticated'
                 }
             }
         }
