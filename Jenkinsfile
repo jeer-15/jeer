@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "my-backend"  // Replace with a name like my-backend
+        DOCKER_IMAGE = "jeershri/my-backend"  // 🔥 Replace with your actual DockerHub username
         DOCKER_TAG = "latest"
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/jeer-15/jeer'  // Replace with your actual repo URL
+                git branch: 'main', url: 'https://github.com/jeer-15/jeer'
             }
         }
 
@@ -23,8 +23,13 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                script {
-                    bat 'docker push %DOCKER_IMAGE%:%DOCKER_TAG%'
+                withCredentials([usernamePassword(credentialsId: 'jeershri-dockerhub', usernameVariable: 'jeershri', passwordVariable: 'DOCKER_PAS')]) {
+                    script {
+                        bat """
+                            echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
+                            docker push %DOCKER_IMAGE%:%DOCKER_TAG%
+                        """
+                    }
                 }
             }
         }
